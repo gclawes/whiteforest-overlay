@@ -17,6 +17,8 @@ LICENSE="Apache-2.0"
 SLOT="0"
 IUSE="master kubelet rkt flannel systemd"
 
+REQUIRE_USE="systemd? ( master kubelet )"
+
 DEPEND="dev-go/go-bindata sys-cluster/kubectl dev-db/etcd"
 RDEPEND="
 	>=app-emulation/docker-1.11.2
