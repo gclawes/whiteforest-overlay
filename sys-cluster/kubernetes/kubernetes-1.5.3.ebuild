@@ -15,7 +15,7 @@ SRC_URI="${ARCHIVE_URI}"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-IUSE="master kubelet rkt flannel systemd"
+IUSE="+master +kubelet rkt flannel systemd"
 
 REQUIRED_USE="systemd? ( master kubelet )"
 
