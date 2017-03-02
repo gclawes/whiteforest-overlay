@@ -28,6 +28,10 @@ RDEPEND="
 
 RESTRICT="test"
 
+pkg_setup() {
+	enewuser kube
+}
+
 src_prepare() {
 	default
 	sed -i -e "/vendor\/github.com\/jteeuwen\/go-bindata\/go-bindata/d" src/${EGO_PN%/*}/hack/lib/golang.sh || die
