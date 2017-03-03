@@ -29,7 +29,7 @@ RDEPEND="
 RESTRICT="test"
 
 pkg_setup() {
-	enewuser kube
+	enewuser kube -1 /bin/false /var/lib/kubelet
 }
 
 src_prepare() {
