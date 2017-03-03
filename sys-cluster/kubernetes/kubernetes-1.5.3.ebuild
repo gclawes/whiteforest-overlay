@@ -55,6 +55,7 @@ src_compile() {
 }
 
 src_install() {
+	dodir /var/lib/kubelet
 	pushd src/${EGO_PN%/*} || die
 	for i in $install_components;do
 		dobin _output/bin/${i}
