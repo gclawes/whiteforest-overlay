@@ -28,8 +28,10 @@ RDEPEND="
 
 RESTRICT="test"
 
+KUBE_USER='kube'
+
 pkg_setup() {
-	enewuser kube
+	enewuser ${KUBE_USER}
 }
 
 src_prepare() {
