@@ -57,7 +57,13 @@ src_compile() {
 }
 
 src_install() {
+	# Create kubelet directory
 	dodir /var/lib/kubelet
+
+	# Create run directory
+	dodir /var/run/kubernetes
+	fowners ${KUBE_USER} /var/run/kubernetes
+
 	pushd src/${EGO_PN%/*} || die
 	for i in $install_components;do
 		dobin _output/bin/${i}
