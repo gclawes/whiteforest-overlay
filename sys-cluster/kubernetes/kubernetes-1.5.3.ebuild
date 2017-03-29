@@ -54,6 +54,8 @@ src_prepare() {
 src_compile() {
 	#LDFLAGS="" GOPATH="${WORKDIR}/${P}" emake -j1 -C src/${EGO_PN%/*} WHAT=cmd/${PN}
 	LDFLAGS="" GOPATH="${WORKDIR}/${P}" emake -j1 -C src/${EGO_PN%/*} WHAT="${kube_components}"
+
+	./src/${EGO_PN%/*}/hack/generate-docs.sh
 }
 
 src_install() {
@@ -65,8 +67,7 @@ src_install() {
 	fowners ${KUBE_USER} /var/run/kubernetes
 
 	pushd src/${EGO_PN%/*} || die
-	for i in $install_components;do
-		dobin _output/bin/${i}
-	done
+	for i in $install_components;do dobin _output/bin/${i}; done
+	doman docs/man/man1/*.1
 	popd || die
 }
