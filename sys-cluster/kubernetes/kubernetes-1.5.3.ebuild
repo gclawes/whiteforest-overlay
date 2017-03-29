@@ -55,7 +55,9 @@ src_compile() {
 	#LDFLAGS="" GOPATH="${WORKDIR}/${P}" emake -j1 -C src/${EGO_PN%/*} WHAT=cmd/${PN}
 	LDFLAGS="" GOPATH="${WORKDIR}/${P}" emake -j1 -C src/${EGO_PN%/*} WHAT="${kube_components}"
 
-	./src/${EGO_PN%/*}/hack/generate-docs.sh
+	pushd src/${EGO_PN%/*} || die
+	./hack/generate-docs.sh
+	popd || die
 }
 
 src_install() {
