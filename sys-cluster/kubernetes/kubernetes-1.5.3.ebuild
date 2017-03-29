@@ -23,8 +23,7 @@ DEPEND="<dev-lang/go-1.8 dev-go/go-bindata sys-cluster/kubectl dev-db/etcd"
 RDEPEND="
 	>=app-emulation/docker-1.11.2
 	rkt? ( app-emulation/rkt )
-	flannel? ( app-emulation/flannel )
-	systemd? ( sys-cluster/kubernetes-systemd sys-apps/systemd )"
+	flannel? ( app-emulation/flannel )"
 
 RESTRICT="test"
 
