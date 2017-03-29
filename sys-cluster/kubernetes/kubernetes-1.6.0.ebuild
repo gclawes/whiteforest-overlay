@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=6
-inherit user golang-build golang-vcs-snapshot
+inherit user golang-build golang-vcs-snapshot systemd
 
 EGO_PN="k8s.io/kubernetes/..."
 ARCHIVE_URI="https://github.com/kubernetes/kubernetes/archive/v${PV}.tar.gz -> kubernetes-${PV}.tar.gz"
@@ -61,15 +61,17 @@ src_compile() {
 }
 
 src_install() {
-	# Create kubelet directory
-	dodir /var/lib/kubelet
-
-	# Create run directory
-	dodir /var/run/kubernetes
-	fowners ${KUBE_USER} /var/run/kubernetes
-
 	pushd src/${EGO_PN%/*} || die
 	for i in $install_components;do dobin _output/bin/${i}; done
 	doman docs/man/man1/*.1
 	popd || die
+	
+	if use systemd; then
+		dodir /etc/kubernetes
+		insinto /etc/kubernetes
+		doins init/systemd/environ/*
+
+		systemd_dounit ${FILESDIR}/systemd/*.service
+		systemd_dotmpfilesd ${FILESDIR}/systemd/tmpfiles.d/*
+	fi
 }
