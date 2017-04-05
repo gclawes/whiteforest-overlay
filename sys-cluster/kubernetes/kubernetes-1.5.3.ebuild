@@ -14,15 +14,14 @@ SRC_URI="${ARCHIVE_URI}"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-IUSE="+master +kubelet rkt flannel systemd"
+IUSE="+master +kubelet rkt systemd"
 
 REQUIRED_USE="systemd? ( master kubelet )"
 
 DEPEND="<dev-lang/go-1.8 dev-go/go-bindata sys-cluster/kubectl dev-db/etcd"
 RDEPEND="
 	>=app-emulation/docker-1.11.2
-	rkt? ( app-emulation/rkt )
-	flannel? ( app-emulation/flannel )"
+	rkt? ( app-emulation/rkt )"
 
 RESTRICT="test"
 
@@ -36,7 +35,7 @@ src_prepare() {
 	default
 	sed -i -e "/vendor\/github.com\/jteeuwen\/go-bindata\/go-bindata/d" src/${EGO_PN%/*}/hack/lib/golang.sh || die
 	sed -i -e "/export PATH/d" src/${EGO_PN%/*}/hack/generate-bindata.sh || die
-	
+
 	kube_components="cmd/kubeadm"
 	install_components="kubeadm"
 	if use master; then
