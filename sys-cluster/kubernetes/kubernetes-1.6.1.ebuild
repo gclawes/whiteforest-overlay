@@ -16,7 +16,7 @@ LICENSE="Apache-2.0"
 SLOT="0"
 IUSE="+master +kubelet rkt systemd"
 
-REQUIRED_USE="systemd? ( master kubelet )"
+REQUIRED_USE=""
 
 DEPEND="<dev-lang/go-1.8 dev-go/go-bindata sys-cluster/kubectl dev-db/etcd"
 RDEPEND="
