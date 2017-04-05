@@ -8,4 +8,9 @@
 	<longdescription lang="en">
 		Installs kubernetes components
 	</longdescription>
+	<use>
+		<flag name="master">Install Kubernetes master components</flag>
+		<flag name="kubelet">Install Kubernetes kubelet/kube-proxy components</flag>
+		<flag name="rkt">Install rkt dependency</flag>
+	</use>
 </pkgmetadata>
