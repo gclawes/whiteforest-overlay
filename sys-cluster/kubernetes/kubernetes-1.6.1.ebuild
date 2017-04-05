@@ -14,9 +14,9 @@ SRC_URI="${ARCHIVE_URI}"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-IUSE="+master +kubelet rkt systemd"
+IUSE="+kubeadm master +kubelet rkt systemd"
 
-REQUIRED_USE=""
+REQUIRED_USE="kubeadm? ( systemd !master !kubelet )"
 
 DEPEND="<dev-lang/go-1.8 dev-go/go-bindata sys-cluster/kubectl dev-db/etcd"
 RDEPEND="
@@ -36,15 +36,20 @@ src_prepare() {
 	sed -i -e "/vendor\/github.com\/jteeuwen\/go-bindata\/go-bindata/d" src/${EGO_PN%/*}/hack/lib/golang.sh || die
 	sed -i -e "/export PATH/d" src/${EGO_PN%/*}/hack/generate-bindata.sh || die
 
-	kube_components="cmd/kubeadm"
-	install_components="kubeadm"
-	if use master; then
-		kube_components="${kube_components} cmd/kube-apiserver cmd/kube-controller-manager plugin/cmd/kube-scheduler"
-		install_components="${install_components} kube-apiserver kube-controller-manager kube-scheduler"
-	fi
-	if use kubelet; then
-		kube_components="${kube_components} cmd/kubelet cmd/kube-proxy"
-		install_components="${install_components} kubelet kube-proxy"
+	kube_components=""
+	install_components=""
+	if use kubeadm; then
+		kube_components="cmd/kubeadm cmd/kubelet"
+		install_components="kubeadm kubelet"
+	else
+		if use master; then
+			kube_components="${kube_components} cmd/kube-apiserver cmd/kube-controller-manager plugin/cmd/kube-scheduler"
+			install_components="${install_components} kube-apiserver kube-controller-manager kube-scheduler"
+		fi
+		if use kubelet; then
+			kube_components="${kube_components} cmd/kubelet cmd/kube-proxy"
+			install_components="${install_components} kubelet kube-proxy"
+		fi
 	fi
 }
 
@@ -63,7 +68,9 @@ src_install() {
 	doman docs/man/man1/*.1
 	popd || die
 
-	if use systemd; then
+	if use kubeadm; then
+		systemd_dounit "${FILESDIR}"/kubelet/kubeadm.service
+	elif use systemd; then
 		dodir /etc/kubernetes
 		insinto /etc/kubernetes
 		doins "${FILESDIR}"/systemd/environ/*
