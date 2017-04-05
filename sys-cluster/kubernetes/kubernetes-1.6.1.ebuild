@@ -70,7 +70,7 @@ src_install() {
 
 	if use kubeadm; then
 		systemd_dounit "${FILESDIR}"/kubeadm/kubelet.service
-		systemd_install_serviced "${FILESDIR}"/kubeadm/10-kubelet.service kubelet.service
+		systemd_install_serviced "${FILESDIR}"/kubeadm/10-kubeadm.conf kubelet.service
 	elif use systemd; then
 		dodir /etc/kubernetes
 		insinto /etc/kubernetes
