@@ -14,7 +14,7 @@ SRC_URI="${ARCHIVE_URI}"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-IUSE="+kubeadm master +kubelet rkt systemd"
+IUSE="+kubeadm master kubelet rkt systemd"
 
 REQUIRED_USE="kubeadm? ( systemd !master !kubelet )"
 
