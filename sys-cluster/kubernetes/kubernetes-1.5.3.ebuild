@@ -69,7 +69,7 @@ src_install() {
 	popd || die
 
 	if use kubeadm; then
-		systemd_dounit "${FILESDIR}"/kubelet/kubeadm.service
+		systemd_dounit "${FILESDIR}"/kubeadm/kubeadm.service
 	elif use systemd; then
 		dodir /etc/kubernetes
 		insinto /etc/kubernetes
