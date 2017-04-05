@@ -68,7 +68,7 @@ src_install() {
 	if use systemd; then
 		dodir /etc/kubernetes
 		insinto /etc/kubernetes
-		doins init/systemd/environ/*
+		doins ${FILESDIR}/systemd/environ/*
 
 		systemd_dounit ${FILESDIR}/systemd/*.service
 		systemd_dotmpfilesd ${FILESDIR}/systemd/tmpfiles.d/*
