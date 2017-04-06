@@ -4,13 +4,19 @@
 EAPI=6
 inherit user golang-build golang-vcs-snapshot systemd
 
-EGO_PN="k8s.io/kubernetes/..."
-ARCHIVE_URI="https://github.com/kubernetes/kubernetes/archive/v${PV}.tar.gz -> kubernetes-${PV}.tar.gz"
-KEYWORDS="~amd64"
-
 DESCRIPTION="CLI to run commands against Kubernetes clusters"
 HOMEPAGE="https://github.com/kubernetes/kubernetes https://kubernetes.io"
-SRC_URI="${ARCHIVE_URI}"
+
+if [ ${PV} == "9999" ] ; then
+	inherit git-r3
+	EGO_PN=""
+	EGIT_REPO_URI="git://github.com/kubernetes/${PN}.git"
+else
+	EGO_PN="k8s.io/kubernetes/..."
+	SRC_URI="https://github.com/kubernetes/kubernetes/archive/v${PV}.tar.gz -> kubernetes-${PV}.tar.gz"
+	KEYWORDS=" ~amd64"
+fi
+
 
 LICENSE="Apache-2.0"
 SLOT="0"
