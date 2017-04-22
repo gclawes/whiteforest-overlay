@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<name>Graeme Lawes</name>
+		<email>graemelawes@gmail.com</email>
+	</maintainer>
+	<longdescription lang="en">
+		Modern SSH server for teams managing distributed infrastructure"
+	</longdescription>
+	<use>
+		<flag name="auth">Enable Teleport auth service</flag>
+		<flag name="proxy">Enable Teleport proxy service</flag>
+		<flag name="node">Enable Teleport SSH service</flag>
+		<flag name="etcd">Use etcd storage backend (required for HA)</flag>
+	</use>
+</pkgmetadata>

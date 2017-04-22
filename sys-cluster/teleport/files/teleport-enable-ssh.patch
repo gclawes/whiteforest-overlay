@@ -1,0 +1,11 @@
+--- work/teleport.yaml
++++ work/teleport.yaml
+@@ -98,7 +98,7 @@
+ # This section configures the 'node service':
+ ssh_service:
+     # Turns 'ssh' role on. Default is 'yes'
+-    enabled: no
++    enabled: yes
+ 
+     # IP and the port for SSH service to bind to. 
+     listen_addr: 0.0.0.0:3022

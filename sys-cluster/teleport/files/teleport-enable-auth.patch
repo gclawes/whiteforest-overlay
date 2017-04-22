@@ -1,0 +1,11 @@
+--- work/teleport.yaml
++++ work/teleport.yaml
+@@ -44,7 +44,7 @@
+ # This section configures the 'auth service':
+ auth_service:
+     # Turns 'auth' role on. Default is 'yes'
+-    enabled: no
++    enabled: yes
+ 
+     # Turns on dynamic configuration. Dynamic configuration defines the source
+     # for configuration information, configuration files on disk or what's
