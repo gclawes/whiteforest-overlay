@@ -2,16 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit user golang-build golang-vcs-snapshot systemd
+inherit user golang-build systemd
 
 DESCRIPTION="CLI to run commands against Kubernetes clusters"
 HOMEPAGE="https://github.com/kubernetes/kubernetes https://kubernetes.io"
 
 if [ ${PV} == "9999" ] ; then
-	inherit git-r3
+	inherit git-r3 golang-vcs
 	EGO_PN=""
 	EGIT_REPO_URI="git://github.com/kubernetes/${PN}.git"
 else
+	inherit golang-vcs-snapshot
 	EGO_PN="k8s.io/kubernetes/..."
 	SRC_URI="https://github.com/kubernetes/kubernetes/archive/v${PV}.tar.gz -> kubernetes-${PV}.tar.gz"
 	KEYWORDS=" ~amd64"
