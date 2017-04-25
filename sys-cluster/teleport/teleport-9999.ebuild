@@ -47,7 +47,7 @@ src_compile() {
 	zip -qr "${S}/src/${EGO_PN%/*}/build/webassets.zip" . || die "failed to create webassets.zip"
 	popd
 	cat "${S}/src/${EGO_PN%/*}/build/webassets.zip" >> "src/${EGO_PN%/*}/build/${PN}"
-	zip -q -A ${S}/build/teleport
+	zip -q -A "${S}/src/${EGO_PN%/*}/build/teleport"
 }
 
 src_install() {
