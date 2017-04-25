@@ -9,9 +9,6 @@
 		Modern SSH server for teams managing distributed infrastructure"
 	</longdescription>
 	<use>
-		<flag name="auth">Enable Teleport auth service</flag>
-		<flag name="proxy">Enable Teleport proxy service</flag>
-		<flag name="node">Enable Teleport SSH service</flag>
 		<flag name="etcd">Use etcd storage backend (required for HA)</flag>
 	</use>
 </pkgmetadata>

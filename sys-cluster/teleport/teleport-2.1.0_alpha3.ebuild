@@ -22,7 +22,7 @@ fi
 
 LICENSE="Apache-2.0"
 SLOT="0"
-IUSE="etcd systemd +auth +proxy +node"
+IUSE="etcd systemd"
 
 DEPEND="<=dev-lang/go-1.7.5 app-arch/zip"
 RDEPEND="
@@ -33,10 +33,6 @@ src_prepare() {
 	default
 
 	for i in ${FILESDIR}/*;do cp $i ${S};done
-
-	use auth && epatch "${S}/${PN}-enable-auth.patch"
-	use proxy && epatch "${S}/${PN}-enable-proxy.patch"
-	use node && epatch "${S}/${PN}-enable-ssh.patch"
 
 	if use etcd; then
 		epatch "${S}/${PN}-etcd-storage-backend.patch"
