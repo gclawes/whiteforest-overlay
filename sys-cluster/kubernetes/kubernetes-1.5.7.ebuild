@@ -24,7 +24,7 @@ IUSE="+kubeadm master kubelet rkt systemd"
 
 REQUIRED_USE="kubeadm? ( systemd !master !kubelet )"
 
-DEPEND="<dev-lang/go-1.8 dev-go/go-bindata sys-cluster/kubectl dev-db/etcd"
+DEPEND="<dev-lang/go-1.7.5 dev-go/go-bindata sys-cluster/kubectl dev-db/etcd"
 RDEPEND="
 	>=app-emulation/docker-1.11.2
 	rkt? ( app-emulation/rkt )"
