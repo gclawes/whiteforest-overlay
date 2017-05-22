@@ -24,7 +24,7 @@ LICENSE="Apache-2.0"
 SLOT="0"
 IUSE="etcd systemd"
 
-DEPEND="<=dev-lang/go-1.7.5 app-arch/zip"
+DEPEND=">=dev-lang/go-1.7.5 app-arch/zip"
 RDEPEND="
 	systemd? ( sys-apps/systemd )
 	etcd? ( dev-db/etcd )"
