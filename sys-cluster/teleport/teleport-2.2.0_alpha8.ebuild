@@ -16,7 +16,7 @@ if [ ${PV} == "9999" ] ; then
 else
 	inherit golang-vcs-snapshot
 	SRC_URI="https://github.com/gravitational/${PN}/archive/v2.2.0-alpha.8.tar.gz"
-	KEYWORDS="~amd64 ~x86 ~arm"
+	KEYWORDS="~amd64"
 fi
 
 
