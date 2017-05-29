@@ -4,7 +4,6 @@
 EAPI=6
 inherit user eutils golang-build systemd
 
-
 DESCRIPTION="Modern SSH server for teams managing distributed infrastructure"
 HOMEPAGE="https://gravitational.com/teleport"
 
@@ -19,7 +18,6 @@ else
 	KEYWORDS="~amd64"
 fi
 
-
 LICENSE="Apache-2.0"
 SLOT="0"
 IUSE="etcd systemd"
@@ -32,7 +30,7 @@ RDEPEND="
 src_prepare() {
 	default
 
-	for i in ${FILESDIR}/*;do cp $i ${S};done
+	for i in "${FILESDIR}"/*;do cp "$i" "${S}";done
 
 	if use etcd; then
 		epatch "${S}/${PN}-etcd-storage-backend.patch"
@@ -60,6 +58,6 @@ src_install() {
 	doins ${PN}.yaml
 
 	newinitd ${PN}.init.d ${PN}
-	
+
 	use systemd && systemd_dounit ${PN}.service
 }
