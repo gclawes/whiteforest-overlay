@@ -18,7 +18,6 @@ else
 	KEYWORDS=" ~amd64"
 fi
 
-
 LICENSE="Apache-2.0"
 SLOT="0"
 IUSE="+kubeadm master kubelet rkt systemd"

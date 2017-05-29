@@ -9,6 +9,7 @@
 		Installs kubernetes components
 	</longdescription>
 	<use>
+		<flag name="kubeadm">Build for self-hosted kubernetes using kubeadm</flag>
 		<flag name="master">Install Kubernetes master components</flag>
 		<flag name="kubelet">Install Kubernetes kubelet/kube-proxy components</flag>
 		<flag name="rkt">Install rkt dependency</flag>
