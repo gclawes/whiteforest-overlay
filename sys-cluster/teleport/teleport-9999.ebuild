@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit user eutils golang-build systemd
+inherit eutils golang-build systemd user
 
 DESCRIPTION="Modern SSH server for teams managing distributed infrastructure"
 HOMEPAGE="https://gravitational.com/teleport"
@@ -14,50 +14,38 @@ if [ ${PV} == "9999" ] ; then
 	EGIT_REPO_URI="https://github.com/gravitational/${PN}.git"
 else
 	inherit golang-vcs-snapshot
-	SRC_URI="https://github.com/gravitational/${PN}/archive/v${PV}.tar.gz"
+	SRC_URI="https://github.com/gravitational/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64"
 fi
 
 LICENSE="Apache-2.0"
 SLOT="0"
-IUSE="etcd systemd"
+IUSE=""
 
-DEPEND=">=dev-lang/go-1.7 app-arch/zip"
-RDEPEND="
-	systemd? ( sys-apps/systemd )
-	etcd? ( dev-db/etcd )"
-
-src_prepare() {
-	default
-
-	for i in "${FILESDIR}"/*;do cp "$i" "${S}";done
-
-	if use etcd; then
-		epatch "${S}/${PN}-etcd-storage-backend.patch"
-		epatch "${S}/${PN}-init-d-etcd.patch"
-		epatch "${S}/${PN}-systemd-etcd.patch"
-	fi
-}
+DEPEND="
+	app-arch/zip
+	>=dev-lang/go-1.7"
+RDEPEND=""
 
 src_compile() {
 	GOPATH="${S}" emake -C src/${EGO_PN%/*}
-	pushd src/${EGO_PN%/*}/web/dist
-	zip -qr "${S}/src/${EGO_PN%/*}/build/webassets.zip" . || die "failed to create webassets.zip"
-	popd
-	cat "${S}/src/${EGO_PN%/*}/build/webassets.zip" >> "src/${EGO_PN%/*}/build/${PN}"
-	zip -q -A "${S}/src/${EGO_PN%/*}/build/teleport"
+	pushd src/${EGO_PN%/*}/web/dist >/dev/null || die
+	zip -qr "${S}/src/${EGO_PN%/*}/build/webassets.zip" . || die
+	popd >/dev/null || die
+	cat "${S}/src/${EGO_PN%/*}/build/webassets.zip" >> "src/${EGO_PN%/*}/build/${PN}" || die
+	zip -q -A "${S}/src/${EGO_PN%/*}/build/${PN}" || die
 }
 
 src_install() {
 	dodir /var/lib/${PN} /etc/${PN}
-	pushd src/${EGO_PN%/*} || die
-	dobin build/{tsh,tctl,teleport}
-	popd
+	dobin src/${EGO_PN%/*}/build/{tsh,tctl,teleport}
 
 	insinto /etc/${PN}
-	doins ${PN}.yaml
+	doins "${FILESDIR}"/${PN}.yaml
 
-	newinitd ${PN}.init.d ${PN}
+	newinitd "${FILESDIR}"/${PN}.init.d ${PN}
+	newconfd "${FILESDIR}"/${PN}.confd ${PN}
 
-	use systemd && systemd_dounit ${PN}.service
+	systemd_dounit "${FILESDIR}"/${PN}.service
+	systemd_install_serviced "${FILESDIR}"/${PN}.service.conf ${PN}.service
 }
