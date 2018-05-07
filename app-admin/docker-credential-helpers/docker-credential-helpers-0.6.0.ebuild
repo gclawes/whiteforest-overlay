@@ -14,7 +14,7 @@ SRC_URI="${ARCHIVE_URI}"
 
 LICENSE="MIT"
 SLOT="0"
-IUSE="+pass secretservice"
+IUSE="+client +pass secretservice"
 
 DEPEND="dev-go/go-bindata
 	secretservice? ( app-crypt/libsecret )"
@@ -25,6 +25,7 @@ RESTRICT=""
 
 src_compile() {
 	helpers=""
+	use client && helpers="${helpers} client"
 	use pass && helpers="${helpers} pass"
 	use secretservice && helpers="${helpers} secretservice"
 	GOPATH="${WORKDIR}/${P}" emake -C src/${EGO_PN} ${helpers}
@@ -32,6 +33,7 @@ src_compile() {
 
 src_install() {
 	pushd src/${EGO_PN} || die
+	use client && dobin bin/docker-credential-client
 	use pass && dobin bin/docker-credential-pass
 	use secretservice && dobin bin/docker-credential-secretservice
 	popd || die
